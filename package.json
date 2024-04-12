@@ -1,0 +1,30 @@
+{
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.8",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.3",
+    "force-graph": "^1.43.5",
+    "hbs": "^4.2.0",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.0",
+    "request": "^2.88.2"
+  },
+  "name": "perreoversograph",
+  "version": "1.0.0",
+  "main": "nodeserver.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/nodeserver.js",
+    "build": "babel src -d dist"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "type": "module",
+  "devDependencies": {
+    "@babel/cli": "^7.24.1",
+    "@babel/core": "^7.24.3",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/preset-env": "^7.24.3"
+  }
+}

@@ -1,0 +1,47 @@
+<head>
+  <title>Perreoverso</title>
+  <link rel="stylesheet" href="../stylesheets/style.css" type="text/css" />
+  <style>
+    body {
+      margin: 0;
+    }
+  </style>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    type="text/css" rel="stylesheet">
+  <script src="//unpkg.com/force-graph"></script>
+  <script src="//unpkg.com/d3-quadtree"></script>
+
+  <script src="//unpkg.com/d3-force"></script>
+
+</head>
+
+<body>
+  <script id="entry-template" type="text/x-handlebars-template"></script>
+  <h1>Perreoverso</h1>
+  <h1>{{title}}</h1>
+  <h3>{{subtitle}}</h3>
+  <div id="graph"></div>
+  <div id="autorgraph"></div>
+  <div class="fichaContainer">
+    <div class="title">
+      <h1>Baila baila baila - Remix</h1>
+    </div>
+    <div class="albumPic">
+      <img src="../images/albums/911.jpg" alt="911" title="911" />
+    </div>
+    <div class="authorList">
+      <p class="authors">Justin Quiles, Natti Natasha, Darrell, Sech, Becky G</p>
+    </div>
+  </div>
+  <div id="canvasContainer">
+    <canvas id="testcanvas" width="600" height="600"></canvas>
+  </div>
+
+  <script type="text/javascript" src="javascripts/canvasdesign.js">
+  </script>
+  <script type="text/javascript" src="javascripts/graph.js"></script>
+</body>

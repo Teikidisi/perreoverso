@@ -1,0 +1,7 @@
+@import "fichas.css";
+@import "fonts.css";
+
+canvas {
+  border: 1px solid black;
+  border-radius: 30px;
+}
