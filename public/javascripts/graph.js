@@ -146,8 +146,15 @@ function createGraph(nodes, links) {
     nodes: nodes,
     links: links,
   };
-
-  const Graph = ForceGraph()(document.getElementById("graph"))
+  let canvasSquare = document.getElementById("graph");
+  let mouseX = 0;
+  let mouseY = 0;
+  onmousemove = function (e) {
+    //console.log("mouse location:", e.clientX, e.clientY);
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  };
+  const Graph = ForceGraph()(canvasSquare)
     .graphData(gData)
     .width(window.innerWidth)
     .height(window.innerHeight / 1.2)
@@ -258,10 +265,16 @@ function createGraph(nodes, links) {
         246
       );
       ctx.fillStyle = "black";
-      ctx.font = "italic 16px Poppins";
+      ctx.font = "italic 16px 'Poppins'";
       ctx.textAlign = "left";
 
       let lines = getLines(ctx, node.autor, 261);
+      //console.log(lines);
+      if (lines.length == 2) {
+        ctx.font = "italic 22px 'Poppins'";
+      } else if (lines.length == 1) {
+        ctx.font = "italic 30px 'Poppins'";
+      }
       for (let i = 0; i < lines.length; i++) {
         ctx.fillText(
           lines[i],
@@ -281,20 +294,22 @@ function createGraph(nodes, links) {
     .linkLabel("Verso")
     .linkColor((link) => {
       if (link.isSongReference) {
-        return "#a8c6e2";
+        return "#81B1E2";
       } else if (!link.isSongReference && link.IDTarget.includes("c")) {
-        return "#FF8077";
+        return "#ffcfcf";
       } else {
         return "#fd3c2e";
       }
     })
-    // .linkCanvasObject()
     .linkWidth(5);
+  // .linkCanvasObject()
 
   Graph.d3Force("link")
     .distance((l) => {
       if (l.isSongReference) {
         return 1000;
+      } else if (l.isSongReference && l.IDTarget.includes("a")) {
+        return 700;
       } else {
         return 1000;
       }
@@ -326,4 +341,20 @@ function createGraph(nodes, links) {
   });
 
   Graph.zoom(1 / (nodes.length / 5), 1000);
+  Graph.onNodeClick((node) => {
+    let screenCords = Graph.graph2ScreenCoords(node.x, node.y);
+    if (
+      mouseX >= screenCords.x - 286 / 2 &&
+      mouseX <= screenCords.x + 286 / 2 &&
+      mouseY >= screenCords.y - 375 / 2 &&
+      mouseY <= screenCords.y + 375 / 2
+    ) {
+      Graph.centerAt(node.x, node.y, 1000);
+      Graph.zoom(0.59, 1000);
+    }
+  });
+  Graph.onNodeDragEnd((node) => {
+    node.fx = node.x;
+    node.fy = node.y;
+  });
 }
