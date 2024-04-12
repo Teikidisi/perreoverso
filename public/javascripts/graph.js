@@ -108,7 +108,7 @@ function initialDataSetup(
   const joinedNodes = modifiedIDSongs.concat(formattedAuthorsforSongNodes);
   const joinedLinks = modifiedIDSongLinks.concat(
     modifiedIDSongAuthorLinks,
-    //modifiedIDAuthorSongLinks,
+    modifiedIDAuthorSongLinks,
     modifiedIDAuthorGroupLinks
   );
   return [joinedNodes, joinedLinks];
@@ -305,11 +305,12 @@ function createGraph(nodes, links) {
   Graph.d3Force("center", d3.forceCenter(0, 0));
   console.log(Graph.nodeRelSize());
   Graph.d3Force("box", () => {
-    const X_SQUARE_HALF_SIDE = 8000;
-    const X_SQUARE_HALF_SIDE_NEGATIVE = -8000;
+    const totalNodes = nodes.length;
+    const X_SQUARE_HALF_SIDE = 80 * totalNodes;
+    const X_SQUARE_HALF_SIDE_NEGATIVE = -80 * totalNodes;
 
-    const Y_SQUARE_HALF_SIDE = 8000;
-    const Y_SQUARE_HALF_SIDE_NEGATIVE = -8000;
+    const Y_SQUARE_HALF_SIDE = 80 * totalNodes;
+    const Y_SQUARE_HALF_SIDE_NEGATIVE = -80 * totalNodes;
 
     nodes.forEach((node) => {
       const x = node.x;
