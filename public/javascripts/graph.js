@@ -107,8 +107,8 @@ function initialDataSetup(
   });
   const joinedNodes = modifiedIDSongs.concat(formattedAuthorsforSongNodes);
   const joinedLinks = modifiedIDSongLinks.concat(
-    modifiedIDSongAuthorLinks,
     modifiedIDAuthorSongLinks,
+    modifiedIDSongAuthorLinks,
     modifiedIDAuthorGroupLinks
   );
   return [joinedNodes, joinedLinks];
@@ -164,6 +164,7 @@ function createGraph(nodes, links) {
     .nodeRelSize(143)
     .nodeLabel("name")
     .nodeCanvasObject((node, ctx) => {
+      // #region CTX drawing
       if (node.id.includes("c")) {
         ctx.fillStyle = "#f3f3f2";
       } else {
@@ -175,7 +176,6 @@ function createGraph(nodes, links) {
       let height = 375;
       let radius = 30;
       ctx.lineWidth = 3;
-      //roundedImage(node.x, node.y, 266, 355, 30, 3);
       ctx.beginPath();
       ctx.moveTo(node.x + radius - width / 2, node.y - height / 2);
       ctx.arcTo(
@@ -212,8 +212,7 @@ function createGraph(nodes, links) {
       ctx.stroke();
       ctx.fill();
       ctx.save();
-      //roundedImage(node.x + 30, node.y + 90, imgSize, imgSize, 15);
-      let = imgWidth = imgSize;
+      let imgWidth = imgSize;
       let imgHheight = imgSize;
       let startX = node.x + 30 - width / 2;
       let startY = node.y + 80 - height / 2;
@@ -283,6 +282,7 @@ function createGraph(nodes, links) {
           261
         );
       }
+      // #endregion
     })
     .nodePointerAreaPaint((node, color, ctx) => {
       const size = 226;
@@ -304,17 +304,18 @@ function createGraph(nodes, links) {
     .linkWidth(5);
   // .linkCanvasObject()
 
-  Graph.d3Force("link")
-    .distance((l) => {
-      if (l.isSongReference) {
-        return 1000;
-      } else if (l.isSongReference && l.IDTarget.includes("a")) {
-        return 700;
-      } else {
-        return 1000;
-      }
-    })
-    .strength();
+  Graph.d3Force("link").distance((l) => {
+    if (!l.isSongReference && l.IDTarget.includes("c")) {
+      return 800;
+    } else {
+      return 1000;
+    }
+  });
+  // .strength((l) => {
+  //   if (!l.isSongReference && l.IDTarget.includes("c")) {
+  //     return 1;
+  //   } else return 0.5;
+  // });
   Graph.d3Force("charge").strength(-5000);
   Graph.d3Force("collide", d3.forceCollide().radius(210));
   Graph.d3Force("center", d3.forceCenter(0, 0));
@@ -350,11 +351,12 @@ function createGraph(nodes, links) {
       mouseY <= screenCords.y + 375 / 2
     ) {
       Graph.centerAt(node.x, node.y, 1000);
-      Graph.zoom(0.59, 1000);
+      Graph.zoom(0.59, 2000);
     }
   });
   Graph.onNodeDragEnd((node) => {
     node.fx = node.x;
     node.fy = node.y;
   });
+  //Graph.warmupTicks(10);
 }
