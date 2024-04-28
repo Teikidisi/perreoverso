@@ -302,7 +302,6 @@ function createGraph(nodes, links) {
       }
     })
     .linkWidth(5);
-  // .linkCanvasObject()
 
   Graph.d3Force("link").distance((l) => {
     if (!l.isSongReference && l.IDTarget.includes("c")) {
@@ -319,7 +318,6 @@ function createGraph(nodes, links) {
   Graph.d3Force("charge").strength(-5000);
   Graph.d3Force("collide", d3.forceCollide().radius(210));
   Graph.d3Force("center", d3.forceCenter(0, 0));
-  console.log(Graph.nodeRelSize());
   Graph.d3Force("box", () => {
     const totalNodes = nodes.length;
     const X_SQUARE_HALF_SIDE = 80 * totalNodes;
@@ -342,6 +340,7 @@ function createGraph(nodes, links) {
   });
 
   Graph.zoom(1 / (nodes.length / 5), 1000);
+
   Graph.onNodeClick((node) => {
     let screenCords = Graph.graph2ScreenCoords(node.x, node.y);
     if (
@@ -358,5 +357,37 @@ function createGraph(nodes, links) {
     node.fx = node.x;
     node.fy = node.y;
   });
+  Graph.onLinkClick((link) => {
+    DeleteModals();
+
+    if (link.Verso === undefined) {
+      return;
+    }
+
+    const versoModal = document.createElement("div");
+    const versoText = document.createTextNode(link.Verso);
+    versoModal.appendChild(versoText);
+    versoModal.style.position = "absolute";
+    versoModal.style.top = mouseY;
+    versoModal.style.left = mouseX;
+    versoModal.style.font = "normal 20px Poppins";
+    versoModal.classList.add("modalLinkText");
+    setTimeout(() => {
+      DeleteModals();
+    }, 3000);
+
+    document.body.appendChild(versoModal);
+  });
+
+  Graph.onNodeDrag(() => {
+    DeleteModals();
+  });
   //Graph.warmupTicks(10);
+}
+
+function DeleteModals() {
+  const existingModals = document.querySelectorAll(".modalLinkText");
+  existingModals.forEach((modal) => {
+    modal.remove();
+  });
 }
