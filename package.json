@@ -18,7 +18,8 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/nodeserver.js"
+    "dev": "nodemon src/nodeserver.js",
+    "production": "node src/nodeserver.js"
   },
   "author": "",
   "license": "ISC",
