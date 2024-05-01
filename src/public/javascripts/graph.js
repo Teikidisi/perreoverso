@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const server = "http://localhost:3000";
 
 async function getDataFromURL(urlAddress) {
@@ -170,7 +171,6 @@ function createGraph(nodes, links) {
       } else {
         ctx.fillStyle = "#fd3c2e";
       }
-      const size = 12;
       const imgSize = 226;
       let width = 286;
       let height = 375;
@@ -285,7 +285,6 @@ function createGraph(nodes, links) {
       // #endregion
     })
     .nodePointerAreaPaint((node, color, ctx) => {
-      const size = 226;
       ctx.fillStyle = color;
       ctx.fillRect(node.x - 286 / 2, node.y - 375 / 2, 286, 375); // draw square as pointer trap
     })
@@ -377,10 +376,6 @@ function createGraph(nodes, links) {
     }, 3000);
 
     document.body.appendChild(versoModal);
-  });
-
-  Graph.onNodeDrag(() => {
-    DeleteModals();
   });
   //Graph.warmupTicks(10);
 }

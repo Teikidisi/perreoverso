@@ -4,6 +4,7 @@ import env from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
 import morgan from "morgan";
+import compression from "compression";
 
 env.config();
 
@@ -11,14 +12,15 @@ const supabaseUrl = "https://fmjvfztmpxupfifftygz.supabase.co";
 const supabase = createClient(supabaseUrl, process.env.SUPABASE_KEY);
 
 const app = express();
+app.use(compression());
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-app.use(express.static(path.join(__dirname, "../public")));
-app.use(express.static(path.join(__dirname, "../public/javascripts")));
+app.use(express.static(path.join(__dirname, "./public")));
+app.use(express.static(path.join(__dirname, "./public/javascripts")));
 
 app.use(morgan("dev"));
 
-app.set("views", path.join(__dirname, "../public/views"));
+app.set("views", path.join(__dirname, "./public/views"));
 app.set("view engine", "hbs");
 
 app.use(express.json());
